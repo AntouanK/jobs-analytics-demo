@@ -1,0 +1,15 @@
+{
+  "name": "data-store",
+  "version": "1.0.0",
+  "description": "A service with a db to hold all our data",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Antonis Karamitros",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.3",
+    "rethinkdb": "^2.1.0"
+  }
+}
