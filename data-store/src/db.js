@@ -8,8 +8,8 @@ const r   = require('rethinkdb'),
 r
 .connect({
   db: 'workshape',
-  host: 'rdb',
-  port: 28015
+  host: 'flat14.dyndns.org',
+  port: 11015
 })
 .then(function (newConn) {
   db.conn = newConn;

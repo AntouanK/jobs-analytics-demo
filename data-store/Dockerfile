@@ -1,5 +1,5 @@
 
-FROM antouank/alpine-iojs:3.3.0
+FROM antouank/node:4.0.0-rc.1
 
 WORKDIR /home/docker/data-store
 

@@ -4,17 +4,28 @@
 const express         = require('express'),
       bodyParser      = require('body-parser'),
       morgan          = require('morgan'),
+      graphqlHTTP     = require('express-graphql'),
       checkStatsObj   = require('./check-country-stats'),
-      addCountryStats = require('./add-country-stats');
+      addCountryStats = require('./add-country-stats'),
+      schema          = require('./graphQL/schema');
+
 
 const app = express();
-
-
 app.use( morgan('dev') );
 
-app.get('/', function (req, res) {
-  res.end('ok');
-});
+
+app.use(
+  '/graphql',
+  graphqlHTTP({ schema: schema, pretty: true })
+);
+
+
+app.get(
+  '/',
+  function (req, res) {
+    res.end('ok');
+  }
+);
 
 
 app.post(
@@ -42,13 +53,13 @@ app.post(
         id:     statsObj.id,
         code:   statsObj.code,
         name:   statsObj.name,
-        snapshots: {}
-      };
-
-      mappedObj
-      .snapshots[timestamp] = {
-        code:     statsObj.count,
-        results:  statsObj.results
+        snapshots: [
+          {
+            id:       statsObj.results.created,
+            count:    statsObj.count,
+            results:  statsObj.results
+          }
+        ]
       };
 
       return mappedObj;

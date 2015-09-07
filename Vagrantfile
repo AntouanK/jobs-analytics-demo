@@ -17,7 +17,7 @@ $enable_serial_logging = false
 $share_home = false
 $vm_gui = false
 $vm_memory = 2048
-$vm_cpus = 2
+$vm_cpus = 4
 $shared_folders = {}
 $forwarded_ports = {}
 
@@ -139,6 +139,9 @@ Vagrant.configure("2") do |config|
         config.vm.provision :file, :source => "#{CLOUD_CONFIG_PATH}", :destination => "/tmp/vagrantfile-user-data"
         config.vm.provision :shell, :inline => "mv /tmp/vagrantfile-user-data /var/lib/coreos-vagrant/", :privileged => true
       end
+
+      # run scripts to build & run containers
+      config.vm.provision :shell, :inline => "cd /home/core/data-store && sh _build.sh && sh _start.sh;"
 
     end
   end

@@ -12,6 +12,8 @@
     "express": "^4.13.3",
     "rethinkdb": "^2.1.0",
     "body-parser": "^1.13.3",
-    "morgan": "^1.6.1"
+    "morgan": "^1.6.1",
+    "graphql": "^0.4.3",
+    "express-graphql": "^0.3.0"
   }
 }
