@@ -22,16 +22,14 @@ app.use(
 
 app.get(
   '/',
-  function (req, res) {
-    res.end('ok');
-  }
+  (req, res) => { res.end('ok'); }
 );
 
 
 app.post(
   '/add/countries',
   bodyParser.json({ limit: '300kb' }),
-  function (req, res) {
+  (req, res) => {
 
     let countriesStats  = req.body.countriesStats,
         timestamp       = req.body.timestamp;
@@ -47,7 +45,7 @@ app.post(
     var promises =
     countriesStats
     .filter(checkStatsObj)
-    .map(function (statsObj) {
+    .map((statsObj) => {
 
       let mappedObj = {
         id:     statsObj.id,
@@ -67,10 +65,10 @@ app.post(
     .map(addCountryStats);
 
     Promise.all(promises)
-    .then(function () {
+    .then(() => {
       res.end(`${promises.length} countries' stats were added.`);
     })
-    .catch(function (err) {
+    .catch(err => {
       res.end(err.message);
     });
   }

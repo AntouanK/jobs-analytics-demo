@@ -17,7 +17,7 @@ const skillType = new GraphQLObjectType({
   name: 'Skill',
   description: 'Some programming skill, I guess',
 
-  fields: function fields () {
+  fields () {
     return {
       name: {
         type: GraphQLString,
@@ -37,7 +37,7 @@ const contractType = new GraphQLObjectType({
 
   name: 'Contract',
 
-  fields: function fields () {
+  fields () {
     return {
       contract: {
         type: GraphQLInt,
@@ -61,7 +61,7 @@ const resultsType = new GraphQLObjectType({
   name: 'Results',
   description: 'Results that give the stats for a country',
 
-  fields: function fields () {
+  fields () {
     return {
       contract_type: {
         type: contractType,
@@ -88,7 +88,7 @@ const snapshotType = new GraphQLObjectType({
   name: 'Snapshot',
   description: 'A snapshot of results as some time point',
 
-  fields: function fields () {
+  fields () {
     return {
       count: {
         type: GraphQLInt,
@@ -115,7 +115,7 @@ const countryStatsType = new GraphQLObjectType({
   name: 'CountryStats',
   description: 'Results that give the stats for a country',
 
-  fields: function fields () {
+  fields () {
     return {
       id: {
         type: GraphQLString,
@@ -160,7 +160,7 @@ var queryType = new GraphQLObjectType({
 
   name: 'Query',
 
-  fields: function fields () {
+  fields () {
     return {
 
       countryStats: {
@@ -171,7 +171,7 @@ var queryType = new GraphQLObjectType({
             type: new GraphQLNonNull(GraphQLString)
           }
         },
-        resolve: function (root, args) {
+        resolve: (root, args) => {
           return getCountryStats(args.id);
         }
       }
