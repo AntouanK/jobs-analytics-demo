@@ -125,7 +125,7 @@ Vagrant.configure("2") do |config|
 
       # Uncomment below to enable NFS for sharing the host machine into the coreos-vagrant VM.
       config.vm.synced_folder "./data-store", "/home/core/data-store", id: "workshape@data-store", :nfs => true, :mount_options => ['nolock,vers=3,udp']
-      config.vm.synced_folder "./web-client", "/home/core/web-client", id: "workshape@web-client", :nfs => true, :mount_options => ['nolock,vers=3,udp']
+      # config.vm.synced_folder "./web-client", "/home/core/web-client", id: "workshape@web-client", :nfs => true, :mount_options => ['nolock,vers=3,udp']
 
       $shared_folders.each_with_index do |(host_folder, guest_folder), index|
         config.vm.synced_folder host_folder.to_s, guest_folder.to_s, id: "core-share%02d" % index, nfs: true, mount_options: ['nolock,vers=3,udp']
