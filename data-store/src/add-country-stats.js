@@ -14,7 +14,7 @@ module.exports = function (givenStatsObj) {
   .table('countryStats')
   .get(givenStatsObj.id)
   .run(db.conn)
-  .then(function (existingStatsObj) {
+  .then(existingStatsObj => {
 
     if(existingStatsObj === null){
       return r
@@ -31,7 +31,7 @@ module.exports = function (givenStatsObj) {
     let timestampExists =
     existingStatsObj
     .snapshots
-    .some(function (thisStatsObj) {
+    .some(thisStatsObj => {
       return thisStatsObj.id === newSnapshot.id;
     });
 
@@ -47,7 +47,7 @@ module.exports = function (givenStatsObj) {
     .update(existingStatsObj)
     .run(db.conn);
   })
-  .then(function () {
+  .then(() => {
     console.log(`[add-country-stats] done in ${Date.now() - startTime}ms`);
   });
 };

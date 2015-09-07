@@ -5,7 +5,7 @@ const r       = require('rethinkdb'),
       db      = require('./db');
 
 
-const byId = function (id) {
+const byId = id => {
 
   return r
   .table('countryStats')
