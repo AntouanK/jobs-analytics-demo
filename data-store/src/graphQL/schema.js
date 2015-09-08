@@ -1,15 +1,39 @@
 
 'use strict';
 
-const GraphQL           = require('graphql'),
-      GraphQLString     = GraphQL.GraphQLString,
-      GraphQLInt        = GraphQL.GraphQLInt,
-      GraphQLObjectType = GraphQL.GraphQLObjectType,
-      GraphQLList       = GraphQL.GraphQLList,
-      GraphQLNonNull    = GraphQL.GraphQLNonNull,
-      GraphQLSchema     = GraphQL.GraphQLSchema,
-      getCountryStats   = require('../get-country-stats').byId;
+const GraphQL             = require('graphql'),
+      GraphQLString       = GraphQL.GraphQLString,
+      GraphQLInt          = GraphQL.GraphQLInt,
+      GraphQLObjectType   = GraphQL.GraphQLObjectType,
+      GraphQLList         = GraphQL.GraphQLList,
+      GraphQLNonNull      = GraphQL.GraphQLNonNull,
+      GraphQLSchema       = GraphQL.GraphQLSchema,
+      getCountryNamesList = require('../get-country-stats').getCountryNamesList,
+      getCountryMostDevs  = require('../get-country-stats').getCountryMostDevs,
+      getCountryStats     = require('../get-country-stats').byId;
 
+
+
+const nameType = new GraphQLObjectType({
+
+  name: 'Name',
+  description: 'Name of a country, and its id.',
+
+  fields () {
+    return {
+      name: {
+        type: GraphQLString,
+        description: 'The name of the country'
+      },
+
+      id: {
+        type: GraphQLString,
+        description: 'The id of the country'
+      }
+    };
+  }
+
+});
 
 
 const skillType = new GraphQLObjectType({
@@ -32,6 +56,7 @@ const skillType = new GraphQLObjectType({
   }
 
 });
+
 
 const contractType = new GraphQLObjectType({
 
@@ -144,9 +169,8 @@ const countryStatsType = new GraphQLObjectType({
 
 /**
  * ( taken from https://github.com/graphql/graphql-js/blob/master/src/__tests__/starWarsSchema.js )
- * This is the type that will be the root of our query, and the
- * entry point into our schema. It gives us the ability to fetch
- * countryStats objects by their IDs.
+ * This is the root query, and the entry point into our schema.
+ * It gives us the ability to fetch countryStats objects by their IDs.
  *
  * This implements the following type system shorthand:
  *   type Query {
@@ -163,7 +187,21 @@ var queryType = new GraphQLObjectType({
   fields () {
     return {
 
-      countryStats: {
+      listCountryNames: {
+        type: new GraphQLList(nameType),
+        resolve: () => {
+          return getCountryNamesList();
+        }
+      },
+
+      listCountriesByMostDevs: {
+        type: new GraphQLList(countryStatsType),
+        resolve: () => {
+          return getCountryMostDevs();
+        }
+      },
+
+      countryStatsFor: {
         type: countryStatsType,
         args: {
           id: {

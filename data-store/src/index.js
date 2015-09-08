@@ -7,6 +7,7 @@ const express         = require('express'),
       graphqlHTTP     = require('express-graphql'),
       checkStatsObj   = require('./check-country-stats'),
       addCountryStats = require('./add-country-stats'),
+      getCountryStats = require('./get-country-stats'),
       schema          = require('./graphQL/schema');
 
 
@@ -23,6 +24,16 @@ app.use(
 app.get(
   '/',
   (req, res) => { res.end('ok'); }
+);
+
+
+app.get(
+  '/test',
+  (req, res) => {
+    getCountryStats.getCountryMostDevs()
+    .then(result  => { res.json(result); })
+    .catch(err    => { res.end(`Error ${err.message}`)});
+  }
 );
 
 
