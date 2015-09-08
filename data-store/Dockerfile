@@ -1,5 +1,5 @@
 
-FROM antouank/node:4.0.0-rc.1
+FROM antouank/alp-node
 
 WORKDIR /home/docker/data-store
 
